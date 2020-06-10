@@ -102,8 +102,49 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: properties.getLength(),
         itemBuilder: (context, index) {
           final property = properties.getItem(index);
-          return ListTile(title: Text(property.name));
+          return ListTile(
+              leading: FlutterLogo(size: 72.0),
+              title: Text(property.name),
+              subtitle: Text('This is where the flat summary goes.'),
+              onTap: () {
+                print("test");
+              });
         },
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
