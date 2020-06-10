@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:property_checklist_app/add_property.dart';
+import 'package:property_checklist_app/data/storage_adapter.dart';
 
 import 'data/property.dart';
 
@@ -54,7 +55,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  List<Property> properties = [Property("Test"), Property("Test 2")];
+  StorageAdapter<Property> properties =
+      ListStorageAdapter<Property>([Property("Test"), Property("Test 2")]);
 
   void _incrementCounter() {
     setState(() {
@@ -65,6 +67,23 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  addProperty(BuildContext context) async {
+    final Property result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AddPropertyPage(
+                title: "Add property",
+              )),
+    );
+
+
+    if (result == null) {
+      return;
+    }
+
+    print(result.name);
   }
 
   @override
@@ -80,21 +99,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: ListView.builder(
-        itemCount: properties.length,
+        itemCount: properties.getLength(),
         itemBuilder: (context, index) {
-          final property = properties[index];
+          final property = properties.getItem(index);
           return ListTile(title: Text(property.name));
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddPropertyPage(
-                      title: "Add property",
-                    )),
-          );
+          addProperty(context);
         },
         label: Text("Add"),
         tooltip: 'Increment',
