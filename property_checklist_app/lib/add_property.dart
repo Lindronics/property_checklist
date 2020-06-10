@@ -13,40 +13,49 @@ class AddPropertyPage extends StatefulWidget {
 }
 
 class _AddPropertyPageState extends State<AddPropertyPage> {
+  final _formKey = GlobalKey<FormState>();
+  String _name;
+
   void addProperty() {
-    Property newProperty = Property("asdf");
-    Navigator.pop(context, newProperty);
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Property newProperty = Property(_name);
+      Navigator.pop(context, newProperty);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
+        key: _formKey,
         child: Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), labelText: "Name"),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
+          appBar: AppBar(
+            title: Text(widget.title),
+          ),
+          body: Center(
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Name"),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a name';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _name = value;
+                    }),
+              ],
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: addProperty,
-        tooltip: 'Add property',
-        label: Text("Finish"),
-        icon: Icon(Icons.check),
-      ),
-    ));
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: addProperty,
+            tooltip: 'Add property',
+            label: Text("Create"),
+            icon: Icon(Icons.check),
+          ),
+        ));
   }
 }

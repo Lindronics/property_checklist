@@ -78,12 +78,13 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
     );
 
-
     if (result == null) {
       return;
     }
 
-    print(result.name);
+    setState(() {
+      properties.addItem(result);
+    });
   }
 
   @override
