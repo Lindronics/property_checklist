@@ -1,6 +1,9 @@
 class Property {
   String name;
-  DateTime available;
+  Uri posting;
+  DateTime availableOn;
+  String address;
 
-  Property(this.name);
+  Property({this.name});
+
 }

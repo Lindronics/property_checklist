@@ -56,7 +56,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   StorageAdapter<Property> properties =
-      ListStorageAdapter<Property>([Property("Test"), Property("Test 2")]);
+      ListStorageAdapter<Property>([Property(name: "Test"), Property(name: "Test 2")]);
 
   void _incrementCounter() {
     setState(() {

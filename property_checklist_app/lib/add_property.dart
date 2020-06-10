@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:property_checklist_app/data/storage_adapter.dart';
 
 import 'data/property.dart';
 
@@ -14,13 +13,12 @@ class AddPropertyPage extends StatefulWidget {
 
 class _AddPropertyPageState extends State<AddPropertyPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name;
+  var _newProperty = Property();
 
   void addProperty() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Property newProperty = Property(_name);
-      Navigator.pop(context, newProperty);
+      Navigator.pop(context, _newProperty);
     }
   }
 
@@ -33,6 +31,8 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
             title: Text(widget.title),
           ),
           body: Center(
+              child: Padding(
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               children: <Widget>[
                 TextFormField(
@@ -45,11 +45,35 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                       return null;
                     },
                     onSaved: (value) {
-                      _name = value;
+                      _newProperty.name = value;
+                    }),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Address"),
+                    onSaved: (value) {
+                      _newProperty.address = value;
+                    }),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), labelText: "URL"),
+                    validator: (value) {
+                      if (Uri.tryParse(value) == null) {
+                        return 'URL not valid';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _newProperty.posting = Uri(path: value);
                     }),
               ],
             ),
-          ),
+          )),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: addProperty,
             tooltip: 'Add property',
