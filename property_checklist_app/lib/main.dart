@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:property_checklist_app/add_property.dart';
+import 'package:property_checklist_app/add_property_page.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
-import 'package:property_checklist_app/property.dart';
+import 'package:property_checklist_app/property_page.dart';
 
 import 'data/property.dart';
 
