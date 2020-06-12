@@ -3,6 +3,7 @@ abstract class StorageAdapter<T> {
   T getItem(int i);
   int getLength();
   void addItem(T item);
+  void deleteItem(T item);
 }
 
 class ListStorageAdapter<T> extends StorageAdapter<T> {
@@ -30,5 +31,10 @@ class ListStorageAdapter<T> extends StorageAdapter<T> {
   @override
   void addItem(T item) {
     _items.add(item);
+  }
+
+  @override
+  void deleteItem(T item) {
+    _items.remove(item);
   }
 }
