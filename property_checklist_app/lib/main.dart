@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:property_checklist_app/add_property.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
+import 'package:property_checklist_app/property.dart';
 
 import 'data/property.dart';
 
@@ -54,20 +55,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  StorageAdapter<Property> properties =
-      ListStorageAdapter<Property>([Property(name: "Test"), Property(name: "Test 2")]);
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  StorageAdapter<Property> properties = ListStorageAdapter<Property>(
+      [Property(name: "Test"), Property(name: "Test 2")]);
 
   addProperty(BuildContext context) async {
     final Property result = await Navigator.push(
@@ -108,7 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text(property.name),
               subtitle: Text('This is where the flat summary goes.'),
               onTap: () {
-                print("test");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PropertyPage(
+                              property: property,
+                            )));
               });
         },
       ),
