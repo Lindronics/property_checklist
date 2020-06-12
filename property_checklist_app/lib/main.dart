@@ -59,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
   StorageAdapter<Property> properties = ListStorageAdapter<Property>(
       [Property(name: "Test"), Property(name: "Test 2")]);
 
+  Property _deletedProperty;
+
   addProperty(BuildContext context) async {
     final Property result = await Navigator.push(
       context,
@@ -116,6 +118,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () {
                     setState(() {
                       properties.deleteItem(property);
+                      _deletedProperty = property;
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text("Deleted ${property.name}"),
+                          action: SnackBarAction(
+                            label: "Undo",
+                            onPressed: () {
+                              setState(() {
+                                properties.addItem(_deletedProperty);
+                              });
+                            },
+                          )));
                     });
                   })
             ],
