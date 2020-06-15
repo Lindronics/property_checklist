@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:property_checklist_app/add_property_page.dart';
+import 'package:property_checklist_app/comparison_page.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
+import 'package:property_checklist_app/feature_manager_page.dart';
 import 'package:property_checklist_app/property_list_page.dart';
 import 'package:property_checklist_app/property_page.dart';
 
@@ -57,11 +59,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  StorageAdapter<Property> properties = ListStorageAdapter<Property>(
-      [Property(name: "Test", bedrooms: 2, bathrooms: 1, monthlyRent: 2300), 
-      Property(name: "Test 2", bedrooms: 2, bathrooms: 1, monthlyRent: 2400)]);
+  StorageAdapter<Property> properties = ListStorageAdapter<Property>([
+    Property(name: "Test", bedrooms: 2, bathrooms: 1, monthlyRent: 2300),
+    Property(name: "Test 2", bedrooms: 2, bathrooms: 1, monthlyRent: 2400)
+  ]);
 
   Property _deletedProperty;
+  int _selectedIndex = 0;
 
   addProperty(BuildContext context) async {
     final Property result = await Navigator.push(
@@ -102,17 +106,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    List<Widget> _pages = <Widget>[
+      PropertyListPage(
+          properties: properties, itemDeletionCallback: deleteProperty),
+      ComparisonPage(),
+      FeatureManagerPage(),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: PropertyListPage(properties: properties, itemDeletionCallback: deleteProperty),
+      body: _pages[_selectedIndex],
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -156,14 +161,22 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         icon: Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            icon: Icon(Icons.home), title: Text("Properties")),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.compare_arrows), title: Text("Compare")),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.format_list_bulleted), title: Text("Features")),
-      ]), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: (int index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text("Properties")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.compare_arrows), title: Text("Compare")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.format_list_bulleted),
+                title: Text("Features")),
+          ]), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -18,6 +18,7 @@ class _FeatureManagerPageState extends State<FeatureManagerPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      itemCount: features.length,
       itemBuilder: (BuildContext context, int index) {
         var feature = features[index];
         return ListTile(
