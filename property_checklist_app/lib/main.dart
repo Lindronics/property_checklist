@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:property_checklist_app/add_property_page.dart';
 import 'package:property_checklist_app/comparison_page.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
 import 'package:property_checklist_app/feature_manager_page.dart';
 import 'package:property_checklist_app/property_list_page.dart';
-import 'package:property_checklist_app/property_page.dart';
 
 import 'data/property.dart';
 
