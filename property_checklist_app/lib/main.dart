@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:property_checklist_app/add_property_page.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
+import 'package:property_checklist_app/property_list_page.dart';
 import 'package:property_checklist_app/property_page.dart';
 
 import 'data/property.dart';
@@ -79,6 +80,25 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  deleteProperty(Property property) {
+    print("asdf");
+    setState(() {
+      properties.deleteItem(property);
+      _deletedProperty = property;
+      // TODO broken for now
+      // Scaffold.of(context).showSnackBar(SnackBar(
+      //     content: Text("Deleted ${property.name}"),
+      //     action: SnackBarAction(
+      //       label: "Undo",
+      //       onPressed: () {
+      //         setState(() {
+      //           properties.addItem(_deletedProperty);
+      //         });
+      //       },
+      //     )));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -91,57 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView.builder(
-        itemCount: properties.getLength(),
-        itemBuilder: (context, index) {
-          final property = properties.getItem(index);
-          return Slidable(
-            actionPane: SlidableScrollActionPane(),
-            actionExtentRatio: 0.2,
-            child: ListTile(
-                leading: FlutterLogo(size: 72.0),
-                title: Text(property.name),
-                subtitle: Text('This is where the flat summary goes.'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PropertyPage(
-                                property: property,
-                              )));
-                }),
-            actions: <Widget>[
-              IconSlideAction(
-                  caption: "Favourite",
-                  color: Colors.yellow,
-                  icon: Icons.star,
-                  onTap: () {})
-            ],
-            secondaryActions: <Widget>[
-              IconSlideAction(
-                  caption: "Delete",
-                  color: Colors.red,
-                  icon: Icons.delete,
-                  onTap: () {
-                    setState(() {
-                      properties.deleteItem(property);
-                      _deletedProperty = property;
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Deleted ${property.name}"),
-                          action: SnackBarAction(
-                            label: "Undo",
-                            onPressed: () {
-                              setState(() {
-                                properties.addItem(_deletedProperty);
-                              });
-                            },
-                          )));
-                    });
-                  })
-            ],
-          );
-        },
-      ),
+      body: PropertyListPage(properties: properties, itemDeletionCallback: deleteProperty),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -184,7 +154,15 @@ class _MyHomePageState extends State<MyHomePage> {
         label: Text("Add"),
         tooltip: 'Increment',
         icon: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home), title: Text("Properties")),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.compare_arrows), title: Text("Compare")),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.format_list_bulleted), title: Text("Features")),
+      ]), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
