@@ -7,11 +7,11 @@ class Property {
   String address;
   List<Feature> features = [];
   Status status;
-  int montlyRent;
+  int monthlyRent;
   int bedrooms;
   int bathrooms;
 
-  Property({this.name}) {
+  Property({this.name, this.bedrooms, this.bathrooms, this.monthlyRent}) {
     features = [
       CountFeature("Number of bedrooms", 1),
       BooleanFeature("Test", true),

@@ -57,7 +57,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   StorageAdapter<Property> properties = ListStorageAdapter<Property>(
-      [Property(name: "Test"), Property(name: "Test 2")]);
+      [Property(name: "Test", bedrooms: 2, bathrooms: 1, monthlyRent: 2300), 
+      Property(name: "Test 2", bedrooms: 2, bathrooms: 1, monthlyRent: 2400)]);
 
   Property _deletedProperty;
 
@@ -101,7 +102,21 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ListTile(
                 leading: FlutterLogo(size: 72.0),
                 title: Text(property.name),
-                subtitle: Text('This is where the flat summary goes.'),
+                subtitle: 
+                Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text("£${property.monthlyRent}pcm"),
+                      ),
+                      Expanded(
+                        child: Text("\u{1f6cf} ${property.bedrooms}"),
+                      ),
+                      Expanded(
+                        child: Text("\u{1f6c1} ${property.bathrooms}")
+                      ),
+                    ],
+                  ),
+                
                 onTap: () {
                   Navigator.push(
                       context,
@@ -153,11 +168,11 @@ class _MyHomePageState extends State<MyHomePage> {
             DrawerHeader(
               child: Text('Drawer Header'),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.teal[200],
               ),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: Text('Features'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -166,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Map'),
               onTap: () {
                 // Update the state of the app
                 // ...
