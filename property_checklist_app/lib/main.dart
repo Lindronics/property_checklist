@@ -110,6 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 property: property,
                               )));
                 }),
+            actions: <Widget>[
+              IconSlideAction(
+                  caption: "Favourite",
+                  color: Colors.yellow,
+                  icon: Icons.star,
+                  onTap: () {})
+            ],
             secondaryActions: <Widget>[
               IconSlideAction(
                   caption: "Delete",
