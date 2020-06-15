@@ -6,6 +6,10 @@ class Property {
   DateTime availableOn;
   String address;
   List<Feature> features = [];
+  Status status;
+  int montlyRent;
+  int bedrooms;
+  int bathrooms;
 
   Property({this.name}) {
     features = [
@@ -14,3 +18,5 @@ class Property {
     ];
   }
 }
+
+enum Status { FOUND, ENQUIRED, SCHEDULED, VIEWED }
