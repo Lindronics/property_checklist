@@ -58,7 +58,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   StorageAdapter<Property> properties = ListStorageAdapter<Property>(
-      [Property(name: "Test"), Property(name: "Test 2")]);
+      [Property(name: "Test", bedrooms: 2, bathrooms: 1, monthlyRent: 2300), 
+      Property(name: "Test 2", bedrooms: 2, bathrooms: 1, monthlyRent: 2400)]);
 
   Property _deletedProperty;
 
@@ -123,11 +124,11 @@ class _MyHomePageState extends State<MyHomePage> {
             DrawerHeader(
               child: Text('Drawer Header'),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.teal[200],
               ),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: Text('Features'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -136,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Map'),
               onTap: () {
                 // Update the state of the app
                 // ...

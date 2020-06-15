@@ -89,7 +89,7 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                       return null;
                     },
                     onSaved: (value) {
-                      _newProperty.montlyRent = int.parse(value);
+                      _newProperty.monthlyRent = int.parse(value);
                     }),
                 SizedBox(
                   height: 20.0,
