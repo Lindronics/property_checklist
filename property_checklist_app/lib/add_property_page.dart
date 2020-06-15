@@ -60,6 +60,7 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                   height: 20.0,
                 ),
                 TextFormField(
+                    keyboardType: TextInputType.url,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), labelText: "URL"),
                     validator: (value) {
@@ -70,6 +71,44 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                     },
                     onSaved: (value) {
                       _newProperty.posting = Uri(path: value);
+                    }),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Price per month"),
+                    validator: (value) {
+                      try {
+                        int.parse(value);
+                      } on FormatException {
+                        return ('Not a valid number!');
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _newProperty.montlyRent = int.parse(value);
+                    }),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Number of bedrooms"),
+                    validator: (value) {
+                      try {
+                        int.parse(value);
+                      } on FormatException {
+                        return ('Not a valid number!');
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _newProperty.bedrooms = int.parse(value);
                     }),
               ],
             ),
