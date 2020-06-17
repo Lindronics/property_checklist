@@ -39,13 +39,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   StorageAdapter<Property> properties = ListStorageAdapter<Property>([
     Property(
-        name: "Test",
+        name: "Not Subway Byres Road",
         bedrooms: 2,
         bathrooms: 1,
         monthlyRent: 2300,
         address: "239 Byres Road, Glasgow"),
     Property(
-        name: "Test 2",
+        name: "Not Subway Dumbarton Road",
         bedrooms: 2,
         bathrooms: 1,
         monthlyRent: 2400,
@@ -73,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         position: property.location,
         infoWindow: InfoWindow(
             title: property.name,
+            snippet: "£${property.monthlyRent}pcm",
             onTap: () {
               Navigator.push(
                   context,

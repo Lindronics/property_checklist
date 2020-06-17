@@ -100,6 +100,7 @@ class PropertyListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SlidingUpPanel(
+      defaultPanelState: PanelState.OPEN,
       parallaxEnabled: true,
       parallaxOffset: 0.65,
       maxHeight: 600, // TODO remove hard-coded number
