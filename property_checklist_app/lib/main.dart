@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         address: "172 Dumbarton Road, Glasgow")
   ]);
 
-  Set<Marker> _markers;
+  Set<Marker> _markers = {};
 
   Property _deletedProperty;
   int _selectedIndex = 0;
@@ -144,7 +144,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Widget> _pages = <Widget>[
       PropertyListPage(
-          properties: properties, itemDeletionCallback: deleteProperty),
+          properties: properties,
+          markers: _markers,
+          itemDeletionCallback: deleteProperty),
       ComparisonPage(),
       FeatureManagerPage(),
     ];
