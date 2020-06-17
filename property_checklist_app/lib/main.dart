@@ -14,25 +14,12 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Property Checklist',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.teal,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Property List'),
@@ -42,15 +29,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -87,7 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  addMarker(Property property) {
+  /// Adds a new [Marker] to the [Set] of map markers.
+  /// Redraws the page.
+  void addMarker(Property property) {
     setState(() => _markers.add(Marker(
         markerId: MarkerId(property.name),
         position: property.location,
@@ -103,7 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
             }))));
   }
 
-  addProperty(BuildContext context) async {
+  /// Launches an [AddPropertyPage].
+  /// Adds a new [Property] to [properties] if returned by the [AddPropertyPage].
+  void addProperty(BuildContext context) async {
     final Property result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -111,37 +93,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: "Add property",
               )),
     );
-
-    if (result == null) {
-      return;
+    if (result != null) {
+      setState(() {
+        properties.addItem(result);
+      });
     }
-
-    setState(() {
-      properties.addItem(result);
-    });
   }
 
-  deleteProperty(Property property) {
+  /// Deletes a [Property] from [properties].
+  /// Displays a [SnackBar] to allow undoing the deletion.
+  void deleteProperty(BuildContext context, Property property) {
     print("asdf");
     setState(() {
       properties.deleteItem(property);
       _deletedProperty = property;
-      // TODO broken for now
-      // Scaffold.of(context).showSnackBar(SnackBar(
-      //     content: Text("Deleted ${property.name}"),
-      //     action: SnackBarAction(
-      //       label: "Undo",
-      //       onPressed: () {
-      //         setState(() {
-      //           properties.addItem(_deletedProperty);
-      //         });
-      //       },
-      //     )));
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text("Deleted ${property.name}"),
+          action: SnackBarAction(
+            label: "Undo",
+            onPressed: () {
+              setState(() {
+                properties.addItem(_deletedProperty);
+              });
+            },
+          )));
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    // Pages in bottom navigation bar
     List<Widget> _pages = <Widget>[
       PropertyListPage(
           properties: properties,
@@ -169,21 +151,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text('Features'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
+              onTap: () {},
             ),
             ListTile(
               title: Text('Map'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
+              onTap: () {},
             ),
           ],
         ),
@@ -211,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.format_list_bulleted),
                 title: Text("Features")),
-          ]), // This trailing comma makes auto-formatting nicer for build methods.
+          ]),
     );
   }
 }

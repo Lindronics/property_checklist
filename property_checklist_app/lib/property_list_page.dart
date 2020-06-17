@@ -12,7 +12,7 @@ class PropertyListPage extends StatelessWidget {
       {Key key,
       this.properties,
       this.markers,
-      @required this.itemDeletionCallback(Property property)})
+      @required this.itemDeletionCallback(BuildContext context, Property property)})
       : super(key: key);
 
   final StorageAdapter<Property> properties;
@@ -86,7 +86,7 @@ class PropertyListPage extends StatelessWidget {
                       color: Colors.red,
                       icon: Icons.delete,
                       onTap: () {
-                        itemDeletionCallback(property);
+                        itemDeletionCallback(context, property);
                       })
                 ],
               );
