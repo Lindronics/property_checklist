@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:property_checklist_app/add_property_page.dart';
 import 'package:property_checklist_app/comparison_page.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
 import 'package:property_checklist_app/feature_manager_page.dart';
 import 'package:property_checklist_app/property_list_page.dart';
+import 'package:property_checklist_app/property_page.dart';
 
 import 'data/property.dart';
 
@@ -58,12 +60,48 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   StorageAdapter<Property> properties = ListStorageAdapter<Property>([
-    Property(name: "Test", bedrooms: 2, bathrooms: 1, monthlyRent: 2300),
-    Property(name: "Test 2", bedrooms: 2, bathrooms: 1, monthlyRent: 2400)
+    Property(
+        name: "Test",
+        bedrooms: 2,
+        bathrooms: 1,
+        monthlyRent: 2300,
+        address: "239 Byres Road, Glasgow"),
+    Property(
+        name: "Test 2",
+        bedrooms: 2,
+        bathrooms: 1,
+        monthlyRent: 2400,
+        address: "172 Dumbarton Road, Glasgow")
   ]);
+
+  Set<Marker> _markers;
 
   Property _deletedProperty;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    for (Property property in properties.getItems()) {
+      property.setAddress(property.address, addMarker);
+    }
+  }
+
+  addMarker(Property property) {
+    setState(() => _markers.add(Marker(
+        markerId: MarkerId(property.name),
+        position: property.location,
+        infoWindow: InfoWindow(
+            title: property.name,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PropertyPage(
+                            property: property,
+                          )));
+            }))));
+  }
 
   addProperty(BuildContext context) async {
     final Property result = await Navigator.push(

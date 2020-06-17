@@ -54,7 +54,7 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), labelText: "Address"),
                     onSaved: (value) {
-                      _newProperty.address = value;
+                      _newProperty.setAddress(value, (p) {});
                     }),
                 SizedBox(
                   height: 20.0,

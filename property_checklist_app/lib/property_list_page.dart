@@ -11,11 +11,14 @@ class PropertyListPage extends StatelessWidget {
   PropertyListPage(
       {Key key,
       this.properties,
+      this.markers,
       @required this.itemDeletionCallback(Property property)})
       : super(key: key);
 
   final StorageAdapter<Property> properties;
   final itemDeletionCallback;
+
+  final Set<Marker> markers;
 
   Widget _scrollingList(ScrollController sc) {
     return Column(
@@ -112,7 +115,7 @@ class PropertyListPage extends StatelessWidget {
       body: GoogleMap(
           myLocationEnabled: true,
           compassEnabled: true,
-          // markers: [],
+          markers: markers,
           // polygons: [],
           // onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
