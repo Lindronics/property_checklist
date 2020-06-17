@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:property_checklist_app/add_property_page.dart';
 import 'package:property_checklist_app/comparison_page.dart';
 import 'package:property_checklist_app/data/storage_adapter.dart';
 import 'package:property_checklist_app/feature_manager_page.dart';
 import 'package:property_checklist_app/property_list_page.dart';
-import 'package:property_checklist_app/property_page.dart';
 
 import 'data/property.dart';
 
@@ -119,9 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _pages[_selectedIndex],
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
